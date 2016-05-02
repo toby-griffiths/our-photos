@@ -24,4 +24,22 @@ class GalleryController
     {
         return new JsonResponse(['galleries' => []]);
     }
+
+
+    public function createAction()
+    {
+        throw new \OutOfBoundsException('Endpoint not defined yet');
+    }
+
+
+    public function updateAction()
+    {
+        throw new \OutOfBoundsException('Endpoint not defined yet');
+    }
+
+
+    public function deleteAction()
+    {
+        throw new \OutOfBoundsException('Endpoint not defined yet');
+    }
 }
