@@ -1,0 +1,17 @@
+{
+    "name": "toby-griffiths/our-photos",
+    "description": "Open source personal photo uploader & gallery platform",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Toby Griffith",
+            "email": "toby@cubicmushroom.co.uk"
+        }
+    ],
+    "require": {
+        "silex/silex": "^1.3",
+        "doctrine/dbal": "~2.2"
+    }
+}
