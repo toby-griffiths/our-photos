@@ -12,7 +12,7 @@ define('SRC_DIR', PROJECT_ROOT . '/src');
 define('VENDOR_DIR', PROJECT_ROOT . '/vendor');
 define('TESTS_DIR', PROJECT_ROOT . '/tests');
 
-$loader = require_once VENDOR_DIR . '/autoload.php';
+$loader = require VENDOR_DIR . '/autoload.php';
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
