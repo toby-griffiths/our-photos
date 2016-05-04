@@ -9,12 +9,12 @@ define('APP_DIR', PROJECT_ROOT . '/app');
 define('VENDOR_DIR', PROJECT_ROOT . '/vendor');
 define('TESTS_DIR', PROJECT_ROOT . '/tests');
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once VENDOR_DIR . '/autoload.php';
 
 $app = new Application();
 
-require_once __DIR__ . '/app/services.php';
-require_once __DIR__ . '/app/middleware.php';
+require_once APP_DIR . '/services.php';
+require_once APP_DIR . '/middleware.php';
 
 // Enabled controllers as services
 $app->register(new ServiceControllerServiceProvider());
