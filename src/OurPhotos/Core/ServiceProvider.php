@@ -21,9 +21,8 @@ use Silex\ServiceProviderInterface;
  */
 class ServiceProvider implements ServiceProviderInterface
 {
-    const MODULE_PREFIX                     = 'our_photos.core';
-    const SERVICE_ROUTING_CONVERTER_GALLERY = 'routing.converter.gallery';
-    const CONTROLLER_GALLERY                = 'controller.gallery';
+    const SERVICE_ROUTING_CONVERTER_GALLERY = 'core.routing.converter.gallery';
+    const CONTROLLER_GALLERY                = 'core.controller.gallery';
 
 
     /**
@@ -59,19 +58,6 @@ class ServiceProvider implements ServiceProviderInterface
 
 
     /**
-     * Prefixes a service ID with the module prefix
-     *
-     * @param string $serviceId
-     *
-     * @return string
-     */
-    protected function prefixServiceId($serviceId)
-    {
-        return sprintf('%s.%s', self::MODULE_PREFIX, $serviceId);
-    }
-
-
-    /**
      * Adds core module services...
      *
      * - our_photos.core.routing.converter.gallery
@@ -80,7 +66,8 @@ class ServiceProvider implements ServiceProviderInterface
      */
     protected function addServices(Application $app)
     {
-        $app[$this->prefixServiceId(self::SERVICE_ROUTING_CONVERTER_GALLERY)] = $app->share(
+        // core.routing.converter.gallery
+        $app[self::SERVICE_ROUTING_CONVERTER_GALLERY] = $app->share(
             function ($app) {
                 return new GalleryParameterConverter($app['orm.em']);
             }
@@ -94,7 +81,7 @@ class ServiceProvider implements ServiceProviderInterface
     protected function addControllers(Application $app)
     {
         // Gallery Controller
-        $app[$this->prefixServiceId(self::CONTROLLER_GALLERY)] = $app->share(
+        $app[self::CONTROLLER_GALLERY] = $app->share(
             function ($app) {
                 return new GalleryController($app['orm.em']);
             }
@@ -119,22 +106,22 @@ class ServiceProvider implements ServiceProviderInterface
         /** @var ControllerCollection $gallery */
         $gallery = $app['controllers_factory'];
 
-        $gallery->get('/', self::MODULE_PREFIX . '.controller.gallery:listAction')
-                ->bind(self::MODULE_PREFIX . '.controller.gallery:list');
-        $gallery->post('/', self::MODULE_PREFIX . '.controller.gallery:createAction')
-                ->bind(self::MODULE_PREFIX . '.controller.gallery:create');
-        $gallery->get('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:viewAction')
+        $gallery->get('/', 'core.controller.gallery:listAction')
+                ->bind('core.gallery:list');
+        $gallery->post('/', 'core.controller.gallery:createAction')
+                ->bind('core.gallery:create');
+        $gallery->get('/{gallery}', 'core.controller.gallery:viewAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
-                ->bind(self::MODULE_PREFIX . '.controller.gallery:view');
-        $gallery->put('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:updateAction')
+                ->bind('core.gallery:view');
+        $gallery->put('/{gallery}', 'core.controller.gallery:updateAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
-                ->bind(self::MODULE_PREFIX . '.controller.gallery:update');
-        $gallery->delete('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:deleteAction')
+                ->bind('core.gallery:update');
+        $gallery->delete('/{gallery}', 'core.controller.gallery:deleteAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
-                ->bind(self::MODULE_PREFIX . '.controller.gallery:delete');
+                ->bind('core.gallery:delete');
 
         $app->mount('/galleries', $gallery);
     }
@@ -148,6 +135,6 @@ class ServiceProvider implements ServiceProviderInterface
      */
     protected function getServiceMethodId($service, $method)
     {
-        return sprintf('%s:%s', $this->prefixServiceId($service), $method);
+        return sprintf('%s:%s', $service, $method);
     }
 }
