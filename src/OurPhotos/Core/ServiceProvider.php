@@ -137,15 +137,15 @@ class ServiceProvider implements ServiceProviderInterface
                 ->bind('core.gallery:list');
         $gallery->post('/', 'core.controller.gallery:createAction')
                 ->bind('core.gallery:create');
-        $gallery->get('/{gallery}', 'core.controller.gallery:viewAction')
+        $gallery->get('/{gallery}/', 'core.controller.gallery:viewAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
                 ->bind('core.gallery:view');
-        $gallery->put('/{gallery}', 'core.controller.gallery:updateAction')
+        $gallery->put('/{gallery}/', 'core.controller.gallery:updateAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
                 ->bind('core.gallery:update');
-        $gallery->delete('/{gallery}', 'core.controller.gallery:deleteAction')
+        $gallery->delete('/{gallery}/', 'core.controller.gallery:deleteAction')
                 ->assert('gallery', '([a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}){1}')
                 ->convert('gallery', $this->getServiceMethodId(self::SERVICE_ROUTING_CONVERTER_GALLERY, 'convert'))
                 ->bind('core.gallery:delete');
