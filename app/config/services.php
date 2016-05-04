@@ -4,6 +4,7 @@ namespace OurPhotos;
 
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 use OurPhotos\Core\Controller\GalleryController;
+use OurPhotos\Core\ServiceProvider as CoreServiceProvider;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -52,12 +53,4 @@ $app->register(
     ]
 );
 
-
-/**
- * Gallery Controller
- */
-$app['our_photos.core.controller.gallery'] = $app->share(
-    function ($app) {
-        return new GalleryController($app['orm.em']);
-    }
-);
+$app->register(new CoreServiceProvider());

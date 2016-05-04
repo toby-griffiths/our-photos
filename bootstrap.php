@@ -14,30 +14,11 @@ define('TESTS_DIR', PROJECT_ROOT . '/tests');
 
 $loader = require VENDOR_DIR . '/autoload.php';
 
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
 $app = new Application();
 
 require_once CONFIG_DIR . '/services.php';
 require_once CONFIG_DIR . '/middleware.php';
-
-/**
- * /galleries endpoints
- */
-/** @var \Silex\ControllerCollection $galleriesEndpoints */
-$galleriesEndpoints = $app['controllers_factory'];
-$galleriesEndpoints->get('/', 'our_photos.core.controller.gallery:listAction');
-$galleriesEndpoints->post('/', 'our_photos.core.controller.gallery:createAction');
-$galleriesEndpoints->put('/', 'our_photos.core.controller.gallery:updateAction');
-$galleriesEndpoints->delete('/', 'our_photos.core.controller.gallery:deleteAction');
-
-$app->mount('/galleries', $galleriesEndpoints);
-
-$app->get(
-    '/hello/{who}',
-    function ($who) {
-        return compact('who');
-    }
-);
 
 return $app;
