@@ -17,7 +17,7 @@ use Ramsey\Uuid\Uuid;
  *
  * @package OurPhotos\OurPhotos\Core
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="GalleryRepository")
  * @ORM\Table()
  */
 class Gallery implements EntityInterface
