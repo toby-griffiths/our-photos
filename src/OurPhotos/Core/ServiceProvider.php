@@ -35,8 +35,8 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $this->addRoutingParameterConverters($app);
         $this->addControllers($app);
+        $this->addRoutingParameterConverters($app);
         $this->addRoutes($app);
 
     }
@@ -58,6 +58,20 @@ class ServiceProvider implements ServiceProviderInterface
 
 
     /**
+     * @param Application $app
+     */
+    protected function addControllers(Application $app)
+    {
+        // Gallery Controller
+        $app[self::CONTROLLER_GALLERY] = $app->share(
+            function ($app) {
+                return new GalleryController($app['orm.em']);
+            }
+        );
+    }
+
+
+    /**
      * Adds core module services...
      *
      * - our_photos.core.routing.converter.gallery
@@ -70,20 +84,6 @@ class ServiceProvider implements ServiceProviderInterface
         $app[self::SERVICE_ROUTING_CONVERTER_GALLERY] = $app->share(
             function ($app) {
                 return new GalleryParameterConverter($app['orm.em']);
-            }
-        );
-    }
-
-
-    /**
-     * @param Application $app
-     */
-    protected function addControllers(Application $app)
-    {
-        // Gallery Controller
-        $app[self::CONTROLLER_GALLERY] = $app->share(
-            function ($app) {
-                return new GalleryController($app['orm.em']);
             }
         );
     }
