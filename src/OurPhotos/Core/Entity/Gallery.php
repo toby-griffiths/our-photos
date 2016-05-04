@@ -26,7 +26,7 @@ class Gallery
      *
      * @ORM\Column(type="string", length=32)
      * @ORM\Id()
-     * @ORM\CustomIdGenerator(class="\OurPhotos\Core\Entity\IDGenerator")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
 }
