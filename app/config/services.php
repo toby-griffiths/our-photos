@@ -58,6 +58,6 @@ $app->register(
  */
 $app['our_photos.core.controller.gallery'] = $app->share(
     function ($app) {
-        return new GalleryController();
+        return new GalleryController($app['orm.em']);
     }
 );

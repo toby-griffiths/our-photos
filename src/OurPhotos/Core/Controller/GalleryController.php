@@ -8,6 +8,7 @@
 
 namespace OurPhotos\Core\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -17,6 +18,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class GalleryController
 {
+    /**
+     * @var EntityManager
+     */
+    protected $em;
+
+
+    /**
+     * GalleryController constructor.
+     *
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+
     /**
      * Lists all galleries
      */
