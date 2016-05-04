@@ -3,7 +3,12 @@
 
 set_time_limit(0);
 
+use Doctrine\ORM\Tools\Console\Command as ORMCommand;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
+use Ivoba\Silex\Console\ConsoleEvent;
+use Ivoba\Silex\Console\ConsoleEvents;
 use Ivoba\Silex\Provider\ConsoleServiceProvider;
+use Symfony\Component\Console\Command\Command;
 
 /** @var \Silex\Application $app */
 $app = require_once __DIR__ . '/../bootstrap.php';
@@ -15,6 +20,40 @@ $app->register(
         'console.version'           => '1.0.0',
         'console.project_directory' => PROJECT_ROOT,
     ]
+);
+
+$app->on(
+    ConsoleEvents::INIT,
+    function (ConsoleEvent $event) use ($app) {
+        $application = $event->getApplication();
+
+        $application->getHelperSet()
+                    ->set(new EntityManagerHelper($app['orm.em']), 'em');
+
+        $commandDir   = VENDOR_DIR . '/doctrine/orm/lib/Doctrine/ORM/Tools/Console/Command';
+        $commandFiles = array_merge(glob($commandDir . '/*.php'), glob($commandDir . '/**/*.php'));
+
+        foreach ($commandFiles as $commandFile) {
+            if (!is_file($commandFile)) {
+                continue;
+            }
+            $commandClass = str_replace(
+                '/',
+                '\\',
+                'Doctrine/ORM/Tools/Console/Command/' . substr($commandFile, strlen($commandDir) + 1, -4)
+            );
+
+            $reflClass = new \ReflectionClass($commandClass);
+
+            if ($reflClass->isAbstract()) {
+                continue;
+            }
+
+            /** @var Command $command */
+            $command = $reflClass->newInstance();
+            $application->add($command);
+        }
+    }
 );
 
 /** @var Ivoba\Silex\Console\Application $console */
