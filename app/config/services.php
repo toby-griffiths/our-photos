@@ -41,10 +41,11 @@ $app->register(
             'mappings' => [
                 // Using actual filesystem paths
                 [
-                    'type'      => 'annotation',
-                    'namespace' => 'OurPhotos\Core\Entity',
-                    'path'      => SRC_DIR . '/Core/Entity',
-                    'alias'     => 'OurPhotos',
+                    'type'                         => 'annotation',
+                    'use_simple_annotation_reader' => false,
+                    'namespace'                    => 'OurPhotos\Core\Entity',
+                    'path'                         => SRC_DIR . '/OurPhotos/Core/Entity',
+                    'alias'                        => 'OurPhotos',
                 ],
             ],
         ],
