@@ -22,11 +22,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Gallery
 {
     /**
-     * @var string
+     * @var \Ramsey\Uuid\Uuid
      *
-     * @ORM\Column(type="string", length=32)
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Id
+     * @ORM\Column(type="uuid")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     protected $id;
 
