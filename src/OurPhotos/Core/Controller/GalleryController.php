@@ -9,6 +9,7 @@
 namespace OurPhotos\Core\Controller;
 
 use Doctrine\ORM\EntityManager;
+use OurPhotos\Core\Entity\Gallery;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
@@ -40,12 +41,20 @@ class GalleryController
      */
     public function listAction()
     {
-        return new JsonResponse(['galleries' => []]);
+        $galleriesRepository = $this->em->getRepository('OurPhotos:Gallery');
+        $galleries = $galleriesRepository->findAll();
+
+        return new JsonResponse(['galleries' => $galleries]);
     }
 
 
     public function createAction()
     {
+        $gallery = new Gallery();
+
+        $this->em->persist($gallery);
+        $this->em->flush($gallery);
+
         throw new \OutOfBoundsException('Endpoint not defined yet');
     }
 
