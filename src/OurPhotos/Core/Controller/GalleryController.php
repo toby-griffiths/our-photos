@@ -10,6 +10,7 @@ namespace OurPhotos\Core\Controller;
 
 use Doctrine\ORM\EntityManager;
 use OurPhotos\Core\Entity\Gallery;
+use OurPhotos\Core\Entity\GalleryRepository;
 use OurPhotos\Core\Formatter\Formatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,8 +54,7 @@ class GalleryController
      */
     public function listAction()
     {
-        $galleriesRepository = $this->em->getRepository('OurPhotos:Gallery');
-        $galleries           = $galleriesRepository->findAll();
+        $galleries = $this->getRepository()->findAll();
 
         $galleriesResponse = array_map([$this->formatter, 'format'], $galleries);
 
@@ -71,8 +71,7 @@ class GalleryController
     {
         $data = $request->request->all();
 
-        $gallery = new Gallery();
-        $gallery->setTitle($data['title']);
+        $gallery = $this->getRepository()->create($data);
 
         $this->em->persist($gallery);
         $this->em->flush($gallery);
@@ -94,9 +93,21 @@ class GalleryController
     }
 
 
-    public function updateAction()
+    /**
+     * @param Gallery $gallery
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Gallery $gallery, Request $request)
     {
-        throw new \OutOfBoundsException('Endpoint not defined yet');
+        $data = $request->request->all();
+
+        $this->getRepository()->populate($gallery, $data);
+
+        $this->em->flush($gallery);
+
+        return new JsonResponse(['gallery' => $this->formatter->format($gallery)], 200);
     }
 
 
@@ -111,5 +122,14 @@ class GalleryController
         $this->em->flush($gallery);
 
         return new Response('', 200);
+    }
+
+
+    /**
+     * @return GalleryRepository
+     */
+    protected function getRepository()
+    {
+        return $this->em->getRepository('OurPhotos:Gallery');
     }
 }
