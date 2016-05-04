@@ -13,6 +13,7 @@ use OurPhotos\Core\Entity\Gallery;
 use OurPhotos\Core\Formatter\Formatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Controller for /gallery endpoints
@@ -99,8 +100,16 @@ class GalleryController
     }
 
 
-    public function deleteAction()
+    /**
+     * @param Gallery $gallery
+     *
+     * @return Response
+     */
+    public function deleteAction(Gallery $gallery)
     {
-        throw new \OutOfBoundsException('Endpoint not defined yet');
+        $this->em->remove($gallery);
+        $this->em->flush($gallery);
+
+        return new Response('', 200);
     }
 }
