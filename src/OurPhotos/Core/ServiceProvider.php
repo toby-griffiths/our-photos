@@ -9,6 +9,8 @@
 namespace OurPhotos\Core;
 
 use OurPhotos\Core\Controller\GalleryController;
+use OurPhotos\Core\Formatter\EntityFormatter\GalleryFormatter;
+use OurPhotos\Core\Formatter\Formatter;
 use OurPhotos\Core\Routing\ParameterConverter\GalleryParameterConverter;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -21,8 +23,10 @@ use Silex\ServiceProviderInterface;
  */
 class ServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_ROUTING_CONVERTER_GALLERY = 'core.routing.parameter_converter.gallery';
     const CONTROLLER_GALLERY                = 'core.controller.gallery';
+    const FORMATTER                         = 'core.formatter';
+    const FORMATTER_GALLERY                 = 'core.formatter.gallery';
+    const SERVICE_ROUTING_CONVERTER_GALLERY = 'core.routing.parameter_converter.gallery';
 
 
     /**
@@ -36,6 +40,7 @@ class ServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $this->addControllers($app);
+        $this->addFormatters($app);
         $this->addRoutingParameterConverters($app);
         $this->addRoutes($app);
 
@@ -65,9 +70,25 @@ class ServiceProvider implements ServiceProviderInterface
         // Gallery Controller
         $app[self::CONTROLLER_GALLERY] = $app->share(
             function ($app) {
-                return new GalleryController($app['orm.em']);
+                return new GalleryController($app['orm.em'], $app[self::FORMATTER]);
             }
         );
+    }
+
+
+    protected function addFormatters(Application $app)
+    {
+        // core.formatter.gallery
+        $app[self::FORMATTER_GALLERY] = $app->share(function(Application $app) {
+            return new GalleryFormatter();
+        });
+
+        // core.formatter
+        $app[self::FORMATTER] = $app->share(function(Application $app) {
+            $formatter = new Formatter();
+
+            $formatter->registerFormatter($app[self::FORMATTER_GALLERY]);
+        });
     }
 
 

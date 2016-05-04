@@ -21,11 +21,9 @@ class Formatter
 
 
     /**
-     * Formatter constructor.
-     *
-     * @param array $formatters
+     * Initialises $formatters array
      */
-    public function __construct(array $formatters)
+    public function __construct()
     {
         $this->formatters = [];
     }
