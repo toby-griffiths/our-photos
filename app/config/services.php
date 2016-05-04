@@ -3,8 +3,10 @@
 namespace OurPhotos;
 
 use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
-use OurPhotos\Core\Controller\GalleryController;
+use Doctrine\DBAL\Types\Type as DoctrineType;
+use Doctrine\ORM\EntityManager;
 use OurPhotos\Core\ServiceProvider as CoreServiceProvider;
+use Ramsey\Uuid\Doctrine\UuidType;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -53,4 +55,14 @@ $app->register(
     ]
 );
 
+// Register the Ramsey UUID ID field type
+DoctrineType::addType('uuid', UuidType::class);
+/** @var EntityManager $em */
+$em = $app['orm.em'];
+$em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('uuid', 'uuid');
+
+/**
+ * OurPhotos Modules
+ */
+// Core
 $app->register(new CoreServiceProvider());
