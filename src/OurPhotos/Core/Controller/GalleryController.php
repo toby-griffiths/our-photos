@@ -47,6 +47,8 @@ class GalleryController
 
     /**
      * Lists all galleries
+     *
+     * @return JsonResponse
      */
     public function listAction()
     {
@@ -80,10 +82,14 @@ class GalleryController
 
     /**
      * @param Gallery $gallery
+     *
+     * @return JsonResponse
      */
     public function viewAction(Gallery $gallery)
     {
-        throw new \OutOfBoundsException('Endpoint not defined yet');
+        $galleryResponse = $this->formatter->format($gallery);
+
+        return new JsonResponse(['gallery' => $galleryResponse]);
     }
 
 
