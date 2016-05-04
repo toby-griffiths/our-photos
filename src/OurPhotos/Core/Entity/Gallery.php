@@ -9,6 +9,7 @@
 namespace OurPhotos\Core\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 
 /**
@@ -22,7 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Gallery
 {
     /**
-     * @var \Ramsey\Uuid\Uuid
+     * @var Uuid
      *
      * @ORM\Id
      * @ORM\Column(type="uuid")
@@ -49,6 +50,7 @@ class Gallery
         return $this->id;
     }
 
+
     /**
      * Set title
      *
@@ -62,6 +64,7 @@ class Gallery
 
         return $this;
     }
+
 
     /**
      * Get title
