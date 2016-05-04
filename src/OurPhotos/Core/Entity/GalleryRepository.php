@@ -3,6 +3,8 @@
 namespace OurPhotos\Core\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
  * Gallery Repository
@@ -34,6 +36,14 @@ class GalleryRepository extends EntityRepository
      */
     public function populate(Gallery $gallery, array $data)
     {
-        throw new \OutOfBoundsException(sprintf('%s::%s() not finished yet', __CLASS__, __METHOD__));
+        $resolver = new OptionsResolver();
+        $resolver->setDefined(['title']);
+        $data = $resolver->resolve($data);
+
+        $propertyAccessor = new PropertyAccessor();
+
+        foreach ($data as $field => $value) {
+            $propertyAccessor->setValue($gallery, $field, $value);
+        }
     }
 }
