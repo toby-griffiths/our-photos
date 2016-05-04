@@ -1,7 +1,6 @@
 <?php
 
 use Silex\Application;
-use Silex\Provider\ServiceControllerServiceProvider;
 
 define('PROJECT_ROOT', __DIR__);
 define('WEB_DIR', PROJECT_ROOT . '/web');
@@ -17,9 +16,6 @@ $app = new Application();
 
 require_once CONFIG_DIR . '/services.php';
 require_once CONFIG_DIR . '/middleware.php';
-
-// Enabled controllers as services
-$app->register(new ServiceControllerServiceProvider());
 
 /**
  * /galleries endpoints
