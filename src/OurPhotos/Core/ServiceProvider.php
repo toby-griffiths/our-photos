@@ -79,16 +79,22 @@ class ServiceProvider implements ServiceProviderInterface
     protected function addFormatters(Application $app)
     {
         // core.formatter.gallery
-        $app[self::FORMATTER_GALLERY] = $app->share(function(Application $app) {
-            return new GalleryFormatter();
-        });
+        $app[self::FORMATTER_GALLERY] = $app->share(
+            function (Application $app) {
+                return new GalleryFormatter();
+            }
+        );
 
         // core.formatter
-        $app[self::FORMATTER] = $app->share(function(Application $app) {
-            $formatter = new Formatter();
+        $app[self::FORMATTER] = $app->share(
+            function (Application $app) {
+                $formatter = new Formatter();
 
-            $formatter->registerFormatter($app[self::FORMATTER_GALLERY]);
-        });
+                $formatter->registerFormatter($app[self::FORMATTER_GALLERY]);
+
+                return $formatter;
+            }
+        );
     }
 
 
