@@ -42,8 +42,8 @@ $app->register(
                 // Using actual filesystem paths
                 [
                     'type'      => 'annotation',
-                    'namespace' => 'OurPhotos\Core\Entities',
-                    'path'      => SRC_DIR . '/Core/Entities',
+                    'namespace' => 'OurPhotos\Core\Entity',
+                    'path'      => SRC_DIR . '/Core/Entity',
                     'alias'     => 'OurPhotos',
                 ],
             ],
