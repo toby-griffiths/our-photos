@@ -8,6 +8,8 @@
 
 namespace OurPhotos\Core\Formatter;
 
+use OurPhotos\Core\Entity\EntityInterface;
+
 /**
  * Interface for entity specific formatter classes
  *
@@ -24,9 +26,11 @@ interface EntityFormatterInterface
 
 
     /**
-     * Should return the format that this formatter outputs
+     * Should format the given entity ready for rendering
      *
-     * @return string
+     * @param EntityInterface $entity
+     *
+     * @return mixed Return data will depend on format required.  Only JSON supported at present.
      */
-    public function supportedFormat();
+    public function format(EntityInterface $entity);
 }

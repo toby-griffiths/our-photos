@@ -44,10 +44,14 @@ class Formatter
 
     /**
      * @param EntityInterface $entity
+     *
+     * @return mixed
      */
     public function format(EntityInterface $entity)
     {
         $formatter = $this->getFormatter($entity);
+
+        return $formatter->format($entity);
     }
 
 
