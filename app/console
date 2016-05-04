@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+set_time_limit(0);
+
+use Ivoba\Silex\Provider\ConsoleServiceProvider;
+
+/** @var \Silex\Application $app */
+$app = require_once __DIR__ . '/../bootstrap.php';
+
+$app->register(
+    new ConsoleServiceProvider(),
+    [
+        'console.name'              => 'Our Photos',
+        'console.version'           => '1.0.0',
+        'console.project_directory' => PROJECT_ROOT,
+    ]
+);
+
+/** @var Ivoba\Silex\Console\Application $console */
+$console = $app['console'];
+
+$app->boot();
+$console->run();
