@@ -10,6 +10,7 @@ namespace OurPhotos\Core\Controller;
 
 use Doctrine\ORM\EntityManager;
 use OurPhotos\Core\Entity\Gallery;
+use OurPhotos\Core\Formatter\Formatter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,15 +26,22 @@ class GalleryController
      */
     protected $em;
 
+    /**
+     * @var Formatter
+     */
+    private $formatter;
+
 
     /**
      * GalleryController constructor.
      *
      * @param EntityManager $em
+     * @param Formatter     $formatter
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Formatter $formatter)
     {
-        $this->em = $em;
+        $this->em        = $em;
+        $this->formatter = $formatter;
     }
 
 
