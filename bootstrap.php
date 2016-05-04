@@ -1,5 +1,6 @@
 <?php
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Silex\Application;
 
 define('PROJECT_ROOT', __DIR__);
@@ -11,7 +12,9 @@ define('SRC_DIR', PROJECT_ROOT . '/src');
 define('VENDOR_DIR', PROJECT_ROOT . '/vendor');
 define('TESTS_DIR', PROJECT_ROOT . '/tests');
 
-require_once VENDOR_DIR . '/autoload.php';
+$loader = require_once VENDOR_DIR . '/autoload.php';
+
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 $app = new Application();
 
