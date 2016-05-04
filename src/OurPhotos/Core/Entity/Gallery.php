@@ -29,4 +29,46 @@ class Gallery
      * @ORM\GeneratedValue(strategy="UUID")
      */
     protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=128)
+     */
+    protected $title;
+
+
+    /**
+     * Get id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Gallery
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 }
