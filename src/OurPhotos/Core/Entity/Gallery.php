@@ -20,7 +20,7 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Entity()
  * @ORM\Table()
  */
-class Gallery
+class Gallery implements EntityInterface
 {
     /**
      * @var Uuid
