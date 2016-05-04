@@ -68,6 +68,15 @@ class GalleryController
     }
 
 
+    /**
+     * @param Gallery $gallery
+     */
+    public function viewAction(Gallery $gallery)
+    {
+        throw new \OutOfBoundsException('Endpoint not defined yet');
+    }
+
+
     public function updateAction()
     {
         throw new \OutOfBoundsException('Endpoint not defined yet');

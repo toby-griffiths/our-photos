@@ -59,7 +59,7 @@ class ServiceProvider implements ServiceProviderInterface
 
         $gallery->get('/', self::MODULE_PREFIX . '.controller.gallery:listAction');
         $gallery->post('/', self::MODULE_PREFIX . '.controller.gallery:createAction');
-        $gallery->get('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:createAction');
+        $gallery->get('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:viewAction');
         $gallery->put('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:updateAction');
         $gallery->delete('/{gallery}', self::MODULE_PREFIX . '.controller.gallery:deleteAction');
 
