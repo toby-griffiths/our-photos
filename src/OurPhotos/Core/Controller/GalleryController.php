@@ -53,7 +53,9 @@ class GalleryController
         $galleriesRepository = $this->em->getRepository('OurPhotos:Gallery');
         $galleries           = $galleriesRepository->findAll();
 
-        return new JsonResponse(['galleries' => $galleries]);
+        $galleriesResponse = array_map([$this->formatter, 'format'], $galleries);
+
+        return new JsonResponse(['galleries' => $galleriesResponse]);
     }
 
 
