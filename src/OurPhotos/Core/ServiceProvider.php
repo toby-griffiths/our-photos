@@ -21,7 +21,7 @@ use Silex\ServiceProviderInterface;
  */
 class ServiceProvider implements ServiceProviderInterface
 {
-    const SERVICE_ROUTING_CONVERTER_GALLERY = 'core.routing.converter.gallery';
+    const SERVICE_ROUTING_CONVERTER_GALLERY = 'core.routing.parameter_converter.gallery';
     const CONTROLLER_GALLERY                = 'core.controller.gallery';
 
 
@@ -35,7 +35,7 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        $this->addServices($app);
+        $this->addRoutingParameterConverters($app);
         $this->addControllers($app);
         $this->addRoutes($app);
 
@@ -64,9 +64,9 @@ class ServiceProvider implements ServiceProviderInterface
      *
      * @param Application $app
      */
-    protected function addServices(Application $app)
+    protected function addRoutingParameterConverters(Application $app)
     {
-        // core.routing.converter.gallery
+        // core.routing.parameter_converter.gallery
         $app[self::SERVICE_ROUTING_CONVERTER_GALLERY] = $app->share(
             function ($app) {
                 return new GalleryParameterConverter($app['orm.em']);
