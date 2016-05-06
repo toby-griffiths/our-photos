@@ -1,0 +1,9 @@
+{
+    "id": "77c98bcb-f4d5-4761-ad6e-2d6aee51d608",
+    "title": "gallery-275f36a7-c1b8-445f-8ebf-3ec61ff27b07-admin", // User provided name, or gallery group format
+    "ownerType": "{gallery/user/system}",  // Who owns this group?  Groups can belong to galleries, users or be system groups
+    "ownerId": "275f36a7-c1b8-445f-8ebf-3ec61ff27b07",
+    "mustHaveMember": true, // Can last member be removed?
+    "created": "2016-01-03 10:13:12",
+    "modified": "2016-03-12 18:00:14"
+}
